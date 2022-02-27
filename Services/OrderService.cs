@@ -81,6 +81,8 @@ public class OrderService : IOrderService
    => _ctx.Orders
 
        .AsNoTracking()
+       
+       .Include(o=>o.Invoices)
 
        .ToListAsync();
   

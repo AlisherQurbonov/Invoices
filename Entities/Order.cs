@@ -20,6 +20,7 @@ public class Order
 
     public virtual Customer Customer { get; set; }
 
+
     public virtual ICollection<Invoice> Invoices { get; set; }
 
     
@@ -30,7 +31,7 @@ public class Order
     public Order(int id, int cust_id)
     {
         Id = id;
-        Date = DateTimeOffset.UtcNow;
+        Date = DateTimeOffset.UtcNow.ToLocalTime();
         Cust_Id = cust_id;
     }
      

@@ -78,6 +78,8 @@ public class CustomerService : ICustomerService
 
         .AsNoTracking()
 
+        .Include(o=>o.Orders)
+
         .ToListAsync();
    
     public Task<List<Customer>> GetIdAsync(int id)
@@ -119,7 +121,7 @@ public class CustomerService : ICustomerService
         {
 
             _log.LogInformation($"Update customer to DB failed: {e.Message}", e);
-            
+
 
             return (false, e, null);
         }

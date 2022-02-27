@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 using invoice.Services;
 using invoice.Models;
 using invoice.Mapper;
+using invoice.Data;
+
 
 namespace invoice.Controller;
 
@@ -13,18 +15,42 @@ public class InvoiceController : ControllerBase
 
       private readonly ILogger<InvoiceController> _log;
       private readonly IInvoiceService _ser;
-    public InvoiceController(ILogger<InvoiceController> logger, IInvoiceService service)
+
+     private readonly InvoiceDbContext _context;
+    public InvoiceController(ILogger<InvoiceController> logger, IInvoiceService service, InvoiceDbContext context)
     {
         _log = logger;
         _ser = service;
+        _context = context;
     }
 
 
     [HttpPost]
-    public async Task<IActionResult> CreateInvoiceAsync( NewInvoice invoice)
+    public async Task<IActionResult> CreateInvoiceAsync([FromForm] NewInvoice invoice)
     {
+          
+          var order = _context.Invoices.OrderBy(p => p.Issued).LastOrDefault();
+
+
+         var invoice1 = invoice.ToInvoiceEntity();
+
+       
+        if (order == null || order.Issued < DateTimeOffset.UtcNow.ToLocalTime())
+        {
+            invoice1.Issued = DateTimeOffset.UtcNow.ToLocalTime();
+            invoice1.Due = invoice1.Issued.AddDays(15);
+
+        }
+
+        else
+        {
+            invoice1.Issued = order.Issued.AddDays(15);
+            invoice1.Due = invoice1.Issued;
+        }
+
+
       
-            var result = await _ser.CreateAsync(invoice.ToInvoiceEntity());
+            var result = await _ser.CreateAsync(invoice1);
 
            try
            {
@@ -39,10 +65,8 @@ public class InvoiceController : ControllerBase
             return Ok( new
             {
                 Id = invoice.Id,
-                Amount = invoice.Amount,
-                Issue = invoice.Issued,
-                Due = invoice.Due
-
+                Ord_Id = invoice.Ord_Id,
+                Amount = invoice.Amount
             });
 
             }
@@ -61,7 +85,45 @@ public class InvoiceController : ControllerBase
     }
 
 
+    [HttpGet]
 
+    public async Task<IActionResult> GetInvoice()
+    {
+
+        var order = _context.Invoices.OrderBy(p => p.Issued).LastOrDefault();
+
+
+       
+        if (order == null || order.Issued < DateTimeOffset.UtcNow.ToLocalTime())
+        {
+            order.Issued = DateTimeOffset.UtcNow.ToLocalTime();
+            order.Due = order.Issued.AddDays(15);
+
+        }
+
+        else
+        {
+            order.Issued = order.Issued.AddDays(15);
+            order.Due = order.Issued;
+            var invoice = await _ser.GetAllAsync();
+            return Ok(invoice.Select(i =>
+                {
+                    return new {
+                        Id = i.Id,
+                        Amount = i.Amount,
+                        Due = i.Due,
+                        Ord_Id = i.Ord_Id
+
+                    };
+              }));
+        }
+          
+           return NotFound("No invoice exist!");
+
+      
+      }
+
+    
 
 
 

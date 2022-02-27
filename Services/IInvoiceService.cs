@@ -10,6 +10,9 @@ public interface IInvoiceService
 
     Task<List<Invoice>> GetIdAsync(int id);
 
+
+     Task<List<Invoice>> GetByIdAsync(int id);
+
     Task<Invoice> GetAsync(int id);
 
     Task<(bool IsSuccess, Exception Exception, Invoice Invoice)> UpdatePostAsync(Invoice invoice);

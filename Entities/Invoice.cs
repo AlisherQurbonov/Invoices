@@ -40,8 +40,6 @@ public class Invoice
         Id = id;
         Ord_Id = ord_Id;
         Amount = amount;
-        Issued = DateTimeOffset.UtcNow;
-        Due = Issued;
     }
     
     

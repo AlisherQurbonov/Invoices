@@ -22,7 +22,7 @@ public class OrderController : ControllerBase
 
 
     [HttpPost]
-    public async Task<IActionResult> CreateOrderAsync( NewOrder order)
+    public async Task<IActionResult> CreateOrderAsync([FromForm] NewOrder order)
     {
       
             var result = await _ser.CreateAsync(order.ToOrderEntity());
@@ -58,4 +58,32 @@ public class OrderController : ControllerBase
           return BadRequest(result.Exception.Message);
 
     }
+
+
+
+        [HttpGet]
+        [Route("{Id}")]
+        public async Task<IActionResult> GetIdMedia(int Id)
+        {
+      
+           if(!await _ser.ExistsAsync(Id))
+        {
+            return NotFound();
+        }
+
+            var images = await _ser.GetIdAsync(Id);
+
+            return Ok(images
+                .Select(i =>
+                {
+                    return new {
+                    Id = i.Id,
+                    Invoice = i.Invoices
+                };
+              }));
+        }
+
+
+
+
 }
