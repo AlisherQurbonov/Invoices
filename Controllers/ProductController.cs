@@ -8,12 +8,12 @@ namespace invoice.Controller;
 
 [ApiController]
 [Route("[controller]")]
-public class InvoiceController : ControllerBase
+public class ProductController : ControllerBase
 {
 
-      private readonly ILogger<InvoiceController> _log;
-      private readonly IInvoiceService _ser;
-    public InvoiceController(ILogger<InvoiceController> logger, IInvoiceService service)
+      private readonly ILogger<ProductController> _log;
+      private readonly IProductService _ser;
+    public ProductController(ILogger<ProductController> logger, IProductService service)
     {
         _log = logger;
         _ser = service;
@@ -21,10 +21,10 @@ public class InvoiceController : ControllerBase
 
 
     [HttpPost]
-    public async Task<IActionResult> CreateInvoiceAsync( NewInvoice invoice)
+    public async Task<IActionResult> CreateInvoiceAsync( NewProduct product)
     {
       
-            var result = await _ser.CreateAsync(invoice.ToInvoiceEntity());
+            var result = await _ser.CreateAsync(product.ToProductEntity());
 
            try
            {
@@ -33,15 +33,16 @@ public class InvoiceController : ControllerBase
             
             {
            
-            _log.LogInformation($"Invoice create in DB: {invoice.Id}");
+            _log.LogInformation($"Invoice create in DB: {product.Id}");
            
            
             return Ok( new
             {
-                Id = invoice.Id,
-                Amount = invoice.Amount,
-                Issue = invoice.Issued,
-                Due = invoice.Due
+                Id = product.Id,
+                Name = product.Name,
+                Description = product.Description,
+                Price = product.Price,
+                Photo = product.Photo
 
             });
 

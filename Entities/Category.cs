@@ -7,7 +7,7 @@ namespace invoice.Entities;
 public class Category
 {
 
-    [Key]
+     [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
 
     public int Id { get; set; }
 

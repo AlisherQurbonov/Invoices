@@ -7,7 +7,7 @@ namespace invoice.Entities;
 public class Customer
 {
 
-    [Key]
+     [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
     public int Id { get; set; }
 
 

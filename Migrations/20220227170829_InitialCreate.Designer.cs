@@ -12,7 +12,7 @@ using invoice.Data;
 namespace invoice.Migrations
 {
     [DbContext(typeof(InvoiceDbContext))]
-    [Migration("20220227160755_InitialCreate")]
+    [Migration("20220227170829_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,10 +27,7 @@ namespace invoice.Migrations
             modelBuilder.Entity("invoice.Entities.Category", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(250)");
@@ -43,10 +40,7 @@ namespace invoice.Migrations
             modelBuilder.Entity("invoice.Entities.Customer", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Country")
                         .HasColumnType("nchar(3)");
@@ -68,10 +62,7 @@ namespace invoice.Migrations
             modelBuilder.Entity("invoice.Entities.Detail", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("Ord_Id")
                         .HasColumnType("int");
@@ -100,10 +91,7 @@ namespace invoice.Migrations
             modelBuilder.Entity("invoice.Entities.Invoice", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<decimal>("Amount")
                         .HasColumnType("decimal(18,2)");
@@ -127,10 +115,7 @@ namespace invoice.Migrations
             modelBuilder.Entity("invoice.Entities.Order", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("Cust_Id")
                         .HasColumnType("int");
@@ -148,10 +133,7 @@ namespace invoice.Migrations
             modelBuilder.Entity("invoice.Entities.Payment", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<decimal>("Amount")
                         .HasColumnType("decimal(18,2)");
@@ -172,10 +154,7 @@ namespace invoice.Migrations
             modelBuilder.Entity("invoice.Entities.Product", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("Category_Id")
                         .HasColumnType("int");

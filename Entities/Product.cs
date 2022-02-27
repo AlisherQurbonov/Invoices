@@ -7,7 +7,7 @@ namespace invoice.Entities;
 public class Product
 {
 
-    [Key]
+     [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
 
     public int Id { get; set; }
 
@@ -30,7 +30,6 @@ public class Product
 
 
     public string Description { get; set; }
-
 
 
     

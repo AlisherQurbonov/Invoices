@@ -36,6 +36,7 @@ public class InvoiceDbContext : DbContext
               c.HasMany(c => c.Orders)
                 .WithOne(o => o.Customer)
                 .HasForeignKey(o => o.Cust_Id)
+                .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
         });
 
@@ -44,6 +45,7 @@ public class InvoiceDbContext : DbContext
               o.HasMany(o => o.Invoices)
                 .WithOne(i => i.Order)
                 .HasForeignKey(i => i.Ord_Id)
+                 .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
         });
 
@@ -53,6 +55,7 @@ public class InvoiceDbContext : DbContext
               i.HasMany(i => i.Payments)
                 .WithOne(p => p.Invoice)
                 .HasForeignKey(p => p.Inv_Id)
+                 .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
         });
 
@@ -77,6 +80,7 @@ public class InvoiceDbContext : DbContext
               i.HasMany(i => i.Products)
                 .WithOne(p => p.Category)
                 .HasForeignKey(p => p.Category_Id)
+                 .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
         });
 
