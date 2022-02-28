@@ -89,7 +89,7 @@ public class InvoiceController : ControllerBase
 
     [HttpGet]
 
-    public async Task<IActionResult> GetInvoice()
+    public async Task<IActionResult> GetDue()
     {
 
         var order = _context.Invoices.OrderBy(p => p.Issued).LastOrDefault();
@@ -127,23 +127,6 @@ public class InvoiceController : ControllerBase
 
 
 
-        [HttpGet]
-        public async Task<IActionResult> GetAllInvoice()
-        {
-
-            var detail = await _ser.GetAllAsync();
-
-            return Ok(detail
-                .Select(i =>
-                {
-                    return new {
-                        Amount = i.Amount,
-                        Due = i.Due,
-                        Ord_Id = i.Ord_Id
-                };
-              }));
-        }
-
 
         [HttpGet]
         [Route("{Id}")]
@@ -165,8 +148,7 @@ public class InvoiceController : ControllerBase
                      Due = i.Due,
                      Ord_Id = i.Ord_Id,
                      Issued = i.Issued,
-                     Order = i.Order,
-                     Payments = i.Payments
+                     Order = i.Order
                 };
               }));
         }
