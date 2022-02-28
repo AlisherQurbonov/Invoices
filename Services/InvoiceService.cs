@@ -79,17 +79,11 @@ public class InvoiceService : IInvoiceService
     
     public Task<List<Invoice>> GetIdAsync(int id)
    => _ctx.Invoices
-
-       .AsNoTracking()
-
        .ToListAsync();
 
     
     public Task<List<Invoice>> GetByIdAsync(int id)
         => _ctx.Invoices
-            .AsNoTracking()
-            .Where(i => i.Id == id)
-            .Include(m => m.Order)
             .ToListAsync();
   
   

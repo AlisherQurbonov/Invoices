@@ -148,7 +148,8 @@ public class InvoiceController : ControllerBase
                      Due = i.Due,
                      Ord_Id = i.Ord_Id,
                      Issued = i.Issued,
-                     Order = i.Order
+                     Order = i.Order,
+                     Payments = i.Payments.ToList()
                 };
               }));
         }

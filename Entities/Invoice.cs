@@ -15,7 +15,7 @@ public class Invoice
 
     public virtual Order Order { get; set; }
 
-    public ICollection<Payment> Payments { get; set; }
+    public virtual ICollection<Payment> Payments { get; set; }
 
 
     [Range(8,2)]

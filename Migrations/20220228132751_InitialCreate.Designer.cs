@@ -12,7 +12,7 @@ using invoice.Data;
 namespace invoice.Migrations
 {
     [DbContext(typeof(InvoiceDbContext))]
-    [Migration("20220227170829_InitialCreate")]
+    [Migration("20220228132751_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

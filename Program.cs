@@ -5,9 +5,11 @@ using invoice.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 
-builder.Services.AddDbContext<InvoiceDbContext>(options 
-            => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
+builder.Services.AddDbContext<InvoiceDbContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
+            .UseLazyLoadingProxies();
+});
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -23,6 +25,12 @@ builder.Services.AddTransient<IInvoiceService, InvoiceService>();
 builder.Services.AddTransient<IOrderService, OrderService>();
 builder.Services.AddTransient<IPaymentService, PaymentService>();
 builder.Services.AddTransient<IProductService, ProductService>();
+
+
+
+builder.Services.AddControllers().AddNewtonsoftJson(options =>
+    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+);
 
 var app = builder.Build();
 

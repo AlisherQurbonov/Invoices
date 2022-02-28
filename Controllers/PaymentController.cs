@@ -21,7 +21,7 @@ public class PaymentController : ControllerBase
 
 
     [HttpPost]
-    public async Task<IActionResult> CreatePaymentAsync( NewPayment payment)
+    public async Task<IActionResult> CreatePaymentAsync([FromForm] NewPayment payment)
     {
       
             var result = await _ser.CreateAsync(payment.ToPaymentEntity());
