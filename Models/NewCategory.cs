@@ -1,3 +1,5 @@
+using invoice.Entities;
+
 namespace invoice.Models;
 
 public class NewCategory

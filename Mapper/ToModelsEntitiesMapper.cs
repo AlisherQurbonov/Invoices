@@ -2,7 +2,9 @@ namespace invoice.Mapper;
 
  public static class ToModelsEntitiesMapper
     {
-         public static Entities.Category ToCategoryEntities(this Models.NewCategory category)
+         
+         
+         public static Entities.Category ToCategoryEntities(this Models.NewCategory category )
          {
             return new Entities.Category
             
@@ -11,6 +13,8 @@ namespace invoice.Mapper;
                 name : category.Name
             );
          }
+
+
 
 
          public static Entities.Customer ToCustomerEntity(this Models.NewCustomer customer)

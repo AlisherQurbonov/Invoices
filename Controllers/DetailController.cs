@@ -21,7 +21,7 @@ public class DetailController : ControllerBase
 
 
     [HttpPost]
-    public async Task<IActionResult> CreateInvoiceAsync( NewDetail detail)
+    public async Task<IActionResult> CreateDetailAsync([FromForm] NewDetail detail)
     {
       
             var result = await _ser.CreateAsync(detail.ToDetailEntity());
@@ -33,14 +33,15 @@ public class DetailController : ControllerBase
             
             {
            
-            _log.LogInformation($"Invoice create in DB: {detail.Id}");
+            _log.LogInformation($"Detail create in DB: {detail.Id}");
            
            
             return Ok( new
             {
                 Id = detail.Id,
                 Quantity = detail.Quantity,
-
+                Ord_Id = detail.Ord_Id,
+                Pr_Id = detail.Pr_Id
             });
 
             }
@@ -50,13 +51,32 @@ public class DetailController : ControllerBase
            catch(Exception e)
            
            {
-                _log.LogInformation($"Create invoice to DB failed: {e.Message}", e);
+                _log.LogInformation($"Create detail to DB failed: {e.Message}", e);
            }
 
           
           return BadRequest(result.Exception.Message);
 
     }
+
+
+       [HttpGet]
+        public async Task<IActionResult> GetDetail()
+        {
+
+            var detail = await _ser.GetAllAsync();
+
+            return Ok(detail
+                .Select(i =>
+                {
+                    return new {
+                    Quantity = i.Quantity,
+                    Ord_Id = i.Ord_Id,
+                    Pr_Id = i.Pr_Id
+                };
+              }));
+        }
+
 
 
 

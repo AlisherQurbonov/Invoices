@@ -21,7 +21,7 @@ public class ProductController : ControllerBase
 
 
     [HttpPost]
-    public async Task<IActionResult> CreateInvoiceAsync( NewProduct product)
+    public async Task<IActionResult> CreateInvoiceAsync([FromForm] NewProduct product)
     {
       
             var result = await _ser.CreateAsync(product.ToProductEntity());
@@ -33,7 +33,7 @@ public class ProductController : ControllerBase
             
             {
            
-            _log.LogInformation($"Invoice create in DB: {product.Id}");
+            _log.LogInformation($"Product create in DB: {product.Id}");
            
            
             return Ok( new
@@ -53,13 +53,57 @@ public class ProductController : ControllerBase
            catch(Exception e)
            
            {
-                _log.LogInformation($"Create invoice to DB failed: {e.Message}", e);
+                _log.LogInformation($"Product invoice to DB failed: {e.Message}", e);
            }
 
           
           return BadRequest(result.Exception.Message);
 
     }
+
+
+        [HttpGet]
+        public async Task<IActionResult> GetProduct()
+        {
+
+            var product = await _ser.GetAllAsync();
+
+            return Ok(product
+                .Select(i =>
+                {
+                    return new {
+                        Name = i.Name,
+                        Description = i.Description,
+                        Price = i.Price,
+                        Photo = i.Photo
+                    };
+              }));
+        }
+
+
+        [HttpGet]
+        [Route("{Id}")]
+        public async Task<IActionResult> GetIdProduct(int Id)
+        {
+      
+           if(!await _ser.ExistsAsync(Id))
+        {
+            return NotFound();
+        }
+
+            var images = await _ser.GetIdAsync(Id);
+
+            return Ok(images
+                .Select(i =>
+                {
+                    return new {
+                        Name = i.Name,
+                        Description = i.Description,
+                        Price = i.Price,
+                        Photo = i.Photo
+                    };
+              }));
+        }
 
 
 

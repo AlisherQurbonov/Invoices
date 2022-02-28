@@ -34,7 +34,7 @@ public class OrderController : ControllerBase
             
             {
            
-            _log.LogInformation($"Invoice create in DB: {order.Id}");
+            _log.LogInformation($"Order create in DB: {order.Id}");
            
            
             return Ok( new
@@ -51,7 +51,7 @@ public class OrderController : ControllerBase
            catch(Exception e)
            
            {
-                _log.LogInformation($"Create invoice to DB failed: {e.Message}", e);
+                _log.LogInformation($"Order invoice to DB failed: {e.Message}", e);
            }
 
           
@@ -63,7 +63,7 @@ public class OrderController : ControllerBase
 
         [HttpGet]
         [Route("{Id}")]
-        public async Task<IActionResult> GetIdMedia(int Id)
+        public async Task<IActionResult> GetIdOrder(int Id)
         {
       
            if(!await _ser.ExistsAsync(Id))
@@ -78,7 +78,9 @@ public class OrderController : ControllerBase
                 {
                     return new {
                     Id = i.Id,
-                    Invoice = i.Invoices
+                    Invoice = i.Invoices,
+                    Date = i.Date,
+                    Cust_Id = i.Cust_Id
                 };
               }));
         }

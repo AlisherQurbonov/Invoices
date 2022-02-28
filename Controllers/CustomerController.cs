@@ -36,7 +36,7 @@ public class CustomerController : ControllerBase
             
             {
            
-            _log.LogInformation($"Invoice create in DB: {customer.Id}");
+            _log.LogInformation($"Customer create in DB: {customer.Id}");
            
            
             return Ok( new
@@ -56,7 +56,7 @@ public class CustomerController : ControllerBase
            catch(Exception e)
            
            {
-                _log.LogInformation($"Create invoice to DB failed: {e.Message}", e);
+                _log.LogInformation($"Create customer to DB failed: {e.Message}", e);
            }
 
           
@@ -66,7 +66,7 @@ public class CustomerController : ControllerBase
 
 
 
-     [HttpGet]
+    [HttpGet]
 
     public async Task<IActionResult> GetCustomer()
     {
@@ -93,7 +93,7 @@ public class CustomerController : ControllerBase
 
         
           
-           return NotFound("No invoice exist!");
+           return NotFound("No customer exist!");
 
       
       }

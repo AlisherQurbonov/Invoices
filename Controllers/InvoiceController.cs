@@ -66,7 +66,9 @@ public class InvoiceController : ControllerBase
             {
                 Id = invoice.Id,
                 Ord_Id = invoice.Ord_Id,
-                Amount = invoice.Amount
+                Amount = invoice.Amount,
+                Issued = invoice.Issued,
+                Due = invoice.Due
             });
 
             }
@@ -122,6 +124,52 @@ public class InvoiceController : ControllerBase
 
       
       }
+
+
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllInvoice()
+        {
+
+            var detail = await _ser.GetAllAsync();
+
+            return Ok(detail
+                .Select(i =>
+                {
+                    return new {
+                        Amount = i.Amount,
+                        Due = i.Due,
+                        Ord_Id = i.Ord_Id
+                };
+              }));
+        }
+
+
+        [HttpGet]
+        [Route("{Id}")]
+        public async Task<IActionResult> GetIdInvoice(int Id)
+        {
+      
+           if(!await _ser.ExistsAsync(Id))
+        {
+            return NotFound();
+        }
+
+            var images = await _ser.GetIdAsync(Id);
+
+            return Ok(images
+                .Select(i =>
+                {
+                    return new {
+                     Amount = i.Amount,
+                     Due = i.Due,
+                     Ord_Id = i.Ord_Id,
+                     Issued = i.Issued,
+                     Order = i.Order,
+                     Payments = i.Payments
+                };
+              }));
+        }
 
     
 

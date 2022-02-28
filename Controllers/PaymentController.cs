@@ -21,7 +21,7 @@ public class PaymentController : ControllerBase
 
 
     [HttpPost]
-    public async Task<IActionResult> CreateInvoiceAsync( NewPayment payment)
+    public async Task<IActionResult> CreatePaymentAsync( NewPayment payment)
     {
       
             var result = await _ser.CreateAsync(payment.ToPaymentEntity());
@@ -33,7 +33,7 @@ public class PaymentController : ControllerBase
             
             {
            
-            _log.LogInformation($"Invoice create in DB: {payment.Id}");
+            _log.LogInformation($"Payment create in DB: {payment.Id}");
            
            
             return Ok( new
@@ -51,13 +51,38 @@ public class PaymentController : ControllerBase
            catch(Exception e)
            
            {
-                _log.LogInformation($"Create invoice to DB failed: {e.Message}", e);
+                _log.LogInformation($"Payment invoice to DB failed: {e.Message}", e);
            }
 
           
           return BadRequest(result.Exception.Message);
 
     }
+
+
+        [HttpGet]
+        [Route("{Id}")]
+        public async Task<IActionResult> GetIdPayment(int Id)
+        {
+      
+           if(!await _ser.ExistsAsync(Id))
+        {
+            return NotFound();
+        }
+
+            var images = await _ser.GetIdAsync(Id);
+
+            return Ok(images
+                .Select(i =>
+                {
+                    return new {
+                    Id = i.Id,
+                    Amount = i.Amount,
+                    Time = i.Time,
+                    Inv_Id = i.Inv_Id
+                };
+              }));
+        }
 
 
 

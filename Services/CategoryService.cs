@@ -84,16 +84,12 @@ public class CategoryService : ICategoryService
     => _ctx.Categories
              
         .AsNoTracking()
-
         .ToListAsync();
    
     public Task<List<Category>> GetIdAsync(int id)
    => _ctx.Categories
 
        .AsNoTracking()
-
-       .Where(i => i.Id == id)
-
        .ToListAsync();
    
    
